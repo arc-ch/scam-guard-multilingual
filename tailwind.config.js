@@ -6,3 +6,15 @@ export default {
   },
   plugins: [],
 };
+
+module.exports = {
+  // ... your existing config
+  safelist: [
+    'bg-red-500/20',
+    'text-red-500',
+    'bg-red-500',
+    'text-red-600',
+    // Add any other conditional classes you use
+  ],
+  // ... rest of config
+}
