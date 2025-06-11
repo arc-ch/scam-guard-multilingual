@@ -1739,6 +1739,24 @@ export async function analyzeUrl(url: string, language: Language): Promise<Analy
   await new Promise(resolve => setTimeout(resolve, 1500));
 
   const domain = extractDomain(url).toLowerCase();
+  const originalUrl = url.toLowerCase();
+  // 🎭 EASTER EGG: Simple check for own site
+  if ( domain.includes('scam-guard-ai-psi.vercel.app') || 
+                     originalUrl.includes('scam-guard-ai-psi.vercel.app') ||
+                     domain.includes('scam-guard-ai') ||
+                     originalUrl.includes('scam-guard-ai')) {
+    return {
+      id: generateId(),
+      type: 'URL Analysis',
+      content: url,
+      risk: 'Safe',
+      confidence: 0,
+      explanation: "😄 Nice try! You're literally on the anti-scam site right now. This is like asking a firefighter if fire is dangerous while standing in the fire station!",
+      timestamp: new Date(),
+      language,
+    };
+  }
+    
   let risk: 'Safe' | 'Suspicious' | 'Scam' = 'Safe';
   let confidence = 20;
   let explanation = '';
