@@ -2079,7 +2079,22 @@ export async function analyzeMessage(message: string, language: Language): Promi
 }
 
 
+// Cancel speech on page unload/reload
+if (typeof window !== 'undefined') {
+  // Cancel speech when page is about to unload
+  window.addEventListener('beforeunload', () => {
+    if ('speechSynthesis' in window) {
+      speechSynthesis.cancel();
+    }
+  });
 
+  // Also cancel speech when page loads
+  window.addEventListener('DOMContentLoaded', () => {
+    if ('speechSynthesis' in window) {
+      speechSynthesis.cancel();
+    }
+  });
+}
 
 export async function synthesizeSpeech(text: string, language: Language): Promise<void> {
   return new Promise((resolve, reject) => {
